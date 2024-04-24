@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map with Location Tracking</title>
+    
+    <style>
+        html, body, #map {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    
+    <form action="/update_map" method="post">
+        <input type="text" name="latitude" placeholder="Enter latitude" required>
+        <input type="text" name="longitude" placeholder="Enter longitude" required>
+        <button type="submit">Generate Map</button>
+    </form>
+
+    {{ map_html | safe }}  <!-- This injects the Folium-generated map HTML -->
+</body>
+</html>
