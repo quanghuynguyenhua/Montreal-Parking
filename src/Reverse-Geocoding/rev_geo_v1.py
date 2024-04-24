@@ -33,7 +33,9 @@ def find_latest_backup():
     '''
     Checking for latest Backups
     '''
-    list_of_files = glob.glob('backup_*.csv')  # List all backup files with the pattern
+    folder_name = 'src/Reverse-Geocoding/assets'
+    search_path = os.path.join(folder_name, 'backup_*.csv')  # Create the full path for glob
+    list_of_files = glob.glob(search_path)  # List all backup files with the pattern in 'assets' folder
     if not list_of_files:
         return None
     latest_file = max(list_of_files, key=os.path.getctime)
@@ -44,16 +46,17 @@ def main():
 
     # Filter columns early to reduce processing load
     df = df[['POTEAU_ID_POT', 'Longitude', 'Latitude', 'NOM_ARROND']]
-    df = df.drop_duplicates(subset=['POTEAU_ID_POT'])
+
 
     chunk_size = 3000
     total_rows = len(df)
 
     start_index = 0
     latest_backup = find_latest_backup()
+    folder_name = 'src/Reverse-Geocoding/assets'
 
     if latest_backup:
-        start_index = int(latest_backup.split('_')[1]) + 1
+        start_index = int(latest_backup.split('_')[1])
         df = pd.read_csv(latest_backup)  # Load the latest backup file
         print(f"Resuming from backup {latest_backup}, starting at row {start_index}")
 
@@ -74,7 +77,7 @@ def main():
         df.loc[start_row:end_row-1, 'street_number'] = street_numbers
         df.loc[start_row:end_row-1, 'street_name'] = street_names
 
-        folder_name = 'assets'
+        
         backup_filename = f'{folder_name}/backup_{start_row}_{end_row-1}.csv'
         df.to_csv(backup_filename, index=False)
         print(f"Backup saved as {backup_filename}. Processed rows {start_row} to {end_row-1}.")
@@ -83,7 +86,9 @@ def main():
             print("Waiting for 60 seconds before processing the next chunk...")
             time.sleep(60)
 
-    df.to_csv('{folder_name}/pot_address.csv', index=False)
+    df = df.drop_duplicates(subset=['POTEAU_ID_POT'])
+    save_file = f'{folder_name}/pot_address.csv'
+    df.to_csv(save_file, index=False)
     print("All data processed and saved successfully.")
 
 if __name__ == "__main__":
