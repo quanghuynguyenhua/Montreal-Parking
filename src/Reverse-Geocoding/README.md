@@ -1,9 +1,8 @@
 ### README.md
 
-```markdown
 # Montreal Parking Data Geocoding
 
-This Python script performs geocoding for parking data in Montreal by using Google's Geocoding API. It reads parking data, performs reverse geocoding to fetch street names and numbers, and saves the enhanced data back as a CSV file.
+This Python script performs geocoding for parking data in Montreal by using Google's Geocoding API. It reads parking signage pole location (longtitue and latitude), performs reverse geocoding to fetch street names and numbers, and saves the enhanced data back as a CSV file.
 
 ## Prerequisites
 
@@ -30,7 +29,7 @@ Ensure you have Python installed on your system. You can download it from [pytho
    Use pip to install the required Python packages:
 
    ```bash
-   pip install pandas requests
+   pip install pandas requests time os glob
    ```
 
 3. **API Key Configuration:**
@@ -57,7 +56,7 @@ The script will process each chunk of parking data and perform geocoding. Result
 ## Backup and Continuation
 The script includes functionality to save a backup of the processed data after each chunk. If the process is interrupted for any reason, you can restart the script and it will continue from the last successfully processed chunk, preventing the need to start over from the beginning. This ensures data is not lost and reduces redundancy in API usage and processing time.
 
-Each backup is saved under the name 'backup_{start_row}_{end_row-1}.csv', where {start_row} and {end_row-1} denote the indices of the first and last rows of the data chunk respectively. When restarting, the script checks for the latest available backup and continues from the next chunk.
+Each backup is saved under the name 'backup_{start_row}_{end_row-1}.csv', where '{start_row}' and '{end_row-1}' denote the indices of the first and last rows of the data chunk respectively. When restarting, the script checks for the latest available backup and continues from the next chunk.
 
 ## Output
 
@@ -74,5 +73,5 @@ Each row represents parking data enriched with geocoded street information.
 
 ## Note
 
-The script includes a pause of 60 seconds between processing each data chunk to comply with API rate limits and to prevent overloading the server.
+The script includes a break of 60 seconds between processing each data chunk to comply with API rate limits and to prevent overloading the server.
 ```
