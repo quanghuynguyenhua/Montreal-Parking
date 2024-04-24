@@ -74,7 +74,8 @@ def main():
         df.loc[start_row:end_row-1, 'street_number'] = street_numbers
         df.loc[start_row:end_row-1, 'street_name'] = street_names
 
-        backup_filename = f'backup_{start_row}_{end_row-1}.csv'
+        folder_name = 'assets'
+        backup_filename = f'{folder_name}/backup_{start_row}_{end_row-1}.csv'
         df.to_csv(backup_filename, index=False)
         print(f"Backup saved as {backup_filename}. Processed rows {start_row} to {end_row-1}.")
 
@@ -82,7 +83,7 @@ def main():
             print("Waiting for 60 seconds before processing the next chunk...")
             time.sleep(60)
 
-    df.to_csv('pot_address.csv', index=False)
+    df.to_csv('{folder_name}/pot_address.csv', index=False)
     print("All data processed and saved successfully.")
 
 if __name__ == "__main__":
