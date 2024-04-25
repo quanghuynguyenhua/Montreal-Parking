@@ -19,6 +19,9 @@ from flask import Flask, render_template, request
 import folium
 from folium import plugins
 
+import pandas as pd
+import config
+
 app = Flask(__name__)
 
 # @app.route("/")
@@ -38,6 +41,9 @@ def jawg_map():
     jawg_access_token = 'WMAqNzaloerLaxYEYXksWqAYggjkIOhiavg4Wpoz9nU8OxEhhlwb0fWViOQ9tOvp'
     jawg_tile_url = 'https://tile.jawg.io/jawg-streets/{z}/{x}/{y}{r}.png?access-token=WMAqNzaloerLaxYEYXksWqAYggjkIOhiavg4Wpoz9nU8OxEhhlwb0fWViOQ9tOvp'
 
+    # Load data from CSV
+    df = pd.read_csv(config.CSV_FILE)
+
     map = folium.Map(
         location=[45.53462, -73.55327],
         tiles=jawg_tile_url,
@@ -46,6 +52,11 @@ def jawg_map():
         zoom_start=12,
         control_scale=True  # Adds a scale at the corner of the map
     )
+
+    # # Add points to the map
+    # for _, row in df.iterrows():
+    #     folium.Marker([row['Latitude'], row['Longitude']], tooltip=row['NOM_ARROND']).add_to(map)
+
 
     # Add the full screen button.                                               
     plugins.Fullscreen(                                                         
