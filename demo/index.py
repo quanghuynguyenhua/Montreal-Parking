@@ -22,6 +22,9 @@ from folium import plugins
 import pandas as pd
 import config
 
+jawg_access_token = config.jawg_access_token
+jawg_tile_url = 'https://tile.jawg.io/jawg-streets/{z}/{x}/{y}{r}.png?access-token=' + config.jawg_access_token
+
 app = Flask(__name__)
 
 # @app.route("/")
@@ -44,9 +47,9 @@ def jawg_map():
 
     map = folium.Map(
         location=[45.53462, -73.55327],
-        tiles=config.jawg_tile_url,
+        tiles=jawg_tile_url,
         attr='Jawg attribution',
-        API_key=config.jawg_access_token,
+        API_key=jawg_access_token,
         zoom_start=12,
         control_scale=True  # Adds a scale at the corner of the map
     )
@@ -83,9 +86,9 @@ def base():
 
     map = folium.Map(
         location=[45.53462, -73.55327],
-        tiles=config.jawg_tile_url,
+        tiles=jawg_tile_url,
         attr='Jawg attribution',
-        API_key=config.jawg_access_token,
+        API_key=jawg_access_token,
         zoom_start=6,
         control_scale=True  # Adds a scale at the corner of the map
     )
@@ -120,9 +123,9 @@ def update_map():
 
     map = folium.Map(
         location=[latitude, longitude],
-        tiles=config.jawg_tile_url,
+        tiles=jawg_tile_url,
         attr='Jawg attribution',
-        API_key=config.jawg_access_token,
+        API_key=jawg_access_token,
         zoom_start=12,
         control_scale=True  # Adds a scale at the corner of the map
     )
