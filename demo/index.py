@@ -38,17 +38,15 @@ app = Flask(__name__)
 
 @app.route("/jawg")
 def jawg_map():
-    jawg_access_token = 'WMAqNzaloerLaxYEYXksWqAYggjkIOhiavg4Wpoz9nU8OxEhhlwb0fWViOQ9tOvp'
-    jawg_tile_url = 'https://tile.jawg.io/jawg-streets/{z}/{x}/{y}{r}.png?access-token=WMAqNzaloerLaxYEYXksWqAYggjkIOhiavg4Wpoz9nU8OxEhhlwb0fWViOQ9tOvp'
 
     # Load data from CSV
     df = pd.read_csv(config.CSV_FILE)
 
     map = folium.Map(
         location=[45.53462, -73.55327],
-        tiles=jawg_tile_url,
+        tiles=config.jawg_tile_url,
         attr='Jawg attribution',
-        API_key=jawg_access_token,
+        API_key=config.jawg_access_token,
         zoom_start=12,
         control_scale=True  # Adds a scale at the corner of the map
     )
@@ -82,14 +80,12 @@ def jawg_map():
 
 @app.route("/", methods=["GET"])
 def base():
-    jawg_access_token = 'WMAqNzaloerLaxYEYXksWqAYggjkIOhiavg4Wpoz9nU8OxEhhlwb0fWViOQ9tOvp'
-    jawg_tile_url = 'https://tile.jawg.io/jawg-streets/{z}/{x}/{y}{r}.png?access-token=WMAqNzaloerLaxYEYXksWqAYggjkIOhiavg4Wpoz9nU8OxEhhlwb0fWViOQ9tOvp'
 
     map = folium.Map(
         location=[45.53462, -73.55327],
-        tiles=jawg_tile_url,
+        tiles=config.jawg_tile_url,
         attr='Jawg attribution',
-        API_key=jawg_access_token,
+        API_key=config.jawg_access_token,
         zoom_start=6,
         control_scale=True  # Adds a scale at the corner of the map
     )
@@ -121,14 +117,12 @@ def update_map():
         zoom_start=12,
         control_scale=True
     )
-    jawg_access_token = 'WMAqNzaloerLaxYEYXksWqAYggjkIOhiavg4Wpoz9nU8OxEhhlwb0fWViOQ9tOvp'
-    jawg_tile_url = 'https://tile.jawg.io/jawg-streets/{z}/{x}/{y}{r}.png?access-token=WMAqNzaloerLaxYEYXksWqAYggjkIOhiavg4Wpoz9nU8OxEhhlwb0fWViOQ9tOvp'
 
     map = folium.Map(
         location=[latitude, longitude],
-        tiles=jawg_tile_url,
+        tiles=config.jawg_tile_url,
         attr='Jawg attribution',
-        API_key=jawg_access_token,
+        API_key=config.jawg_access_token,
         zoom_start=12,
         control_scale=True  # Adds a scale at the corner of the map
     )
